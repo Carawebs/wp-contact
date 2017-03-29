@@ -1,0 +1,15 @@
+{
+    "name": "carawebs/wp-contact",
+    "description": "Contact functionality for WordPress/Sage theme.",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Egan",
+            "email": "david@carawebs.com"
+        }
+    ],
+    "require": {
+        "carawebs/wp-plugin-settings": "^1.0"
+    }
+}

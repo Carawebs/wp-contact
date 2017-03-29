@@ -1,0 +1,51 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "f0e4c8c05da39ae44b69f3be691b1263",
+    "packages": [
+        {
+            "name": "carawebs/wp-plugin-settings",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Carawebs/wp-plugin-settings.git",
+                "reference": "1f5db670460e12993914a134d5b84f7c479cb724"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Carawebs/wp-plugin-settings/zipball/1f5db670460e12993914a134d5b84f7c479cb724",
+                "reference": "1f5db670460e12993914a134d5b84f7c479cb724",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Carawebs\\Settings\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL2"
+            ],
+            "authors": [
+                {
+                    "name": "David Egan",
+                    "email": "david@carawebs.com"
+                }
+            ],
+            "description": "Generate WordPress plugin settings from a config file.",
+            "time": "2017-03-29T16:49:51+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
