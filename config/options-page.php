@@ -16,7 +16,7 @@ return [
         [
             'tab' => 'Main',
             'is_tab' => true,
-            'option_name' => 'carawebs_address_main',
+            'option_name' => 'carawebs_address',
             'option_group' => 'main',
             'id' => 'main',
             'title' => 'Main Section',
@@ -24,14 +24,20 @@ return [
             'fields' =>[
                 [
                     'type' => 'text',
-                    'name' => 'address_line_1',
+                    'name' => 'company',
+                    'title' => 'Company Name',
+                    'default' => NULL,
+                ],
+                [
+                    'type' => 'text',
+                    'name' => 'line_1',
                     'title' => 'Address Line One',
                     'default' => NULL,
                     'placeholder' => 'Type here'
                 ],
                 [
                     'type' => 'text',
-                    'name' => 'address_line_2',
+                    'name' => 'line_2',
                     'title' => 'Address Line Two',
                     'default' => NULL,
                 ],
@@ -48,27 +54,22 @@ return [
                     'default' => NULL,
                 ],
                 [
-                    'type' => 'textarea',
-                    'name' => 'description',
-                    'title' => 'Description',
+                    'type' => 'text',
+                    'name' => 'postcode',
+                    'title' => 'Postcode',
                     'default' => NULL,
                 ],
                 [
-                    'type' => 'select',
-                    'name' => 'chooser',
-                    'title' => 'Chooser',
+                    'type' => 'text',
+                    'name' => 'country',
+                    'title' => 'Country',
                     'default' => NULL,
-                    'multi_options' => [
-                        'Good' => 'SYNERGY!',
-                        'Bad' => 'ECSTASY!',
-                        'Indifferent' => 'APOSTOSASSY!'
-                    ]
-                ]
+                ],
             ]
         ],
         [
             'tab' => 'Social Media',
-            'option_name' => 'carawebs_address_social',
+            'option_name' => 'carawebs_social',
             'option_group' => 'social-media', // At the moment, this MUST be the slugified 'tab' value @TODO Fix this!!
             'id' => 'social-media',
             'title' => 'Social Media',
