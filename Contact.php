@@ -14,20 +14,21 @@ Domain Path:       /languages
 namespace Carawebs\Contact;
 
 use Carawebs\Settings;
+include __DIR__.'/Base.php';
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 /**
 * Singleton class to start the plugin.
 */
-class Contact
+class Contact extends Base
 {
+    private $config;
+
     /**
      * Refers to a single instance of this class
      * @var Object|NULL
      */
     private static $instance = NULL;
-
-    private $optionsPageConfig;
 
     /**
      * Plugin instantiation by singleton method.
@@ -45,7 +46,7 @@ class Contact
     {
         $this->autoload();
         $this->setPaths();
-        $optionsPage->setOptionsPageArgs($this->optionsPageConfig)->initOptionsPage();
+        $optionsPage->setOptionsPageArgs($this->config)->initOptionsPage();
         $dataFilters->addFilters();
     }
 
@@ -55,7 +56,7 @@ class Contact
     private function setPaths()
     {
         $path = dirname(__FILE__) . '/config/';
-        $this->optionsPageConfig = $path . '/options-page.php';
+        $this->config = $path . '/options-page.php';
     }
 
     private function onActivation()
@@ -74,28 +75,6 @@ class Contact
         register_deactivation_hook( __FILE__, function(){
             flush_rewrite_rules();
         });
-    }
-
-    /**
-    * Load Composer autoload if available, otherwise register a simple autoload callback.
-    *
-    * @return void
-    */
-    private function autoload()
-    {
-        static $done;
-        // Go ahead if $done == NULL or the class doesn't exist
-        if ( ! $done && ! class_exists( 'Carawebs\CustomContent\CPT\Setup', true ) ) {
-            $done = true;
-            file_exists( __DIR__.'/vendor/autoload.php' )
-            ? require_once __DIR__.'/vendor/autoload.php'
-            : spl_autoload_register( function ( $class ) {
-                if (strpos($class, __NAMESPACE__) === 0) {
-                    $name = str_replace('\\', '/', substr($class, strlen(__NAMESPACE__)));
-                    require_once __DIR__."/src{$name}.php";
-                }
-            });
-        }
     }
 }
 
