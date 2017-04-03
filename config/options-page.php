@@ -98,5 +98,36 @@ return [
                 ],
             ],
         ],
+        [
+            'tab' => 'Company Details',
+            'option_name' => 'carawebs_company',
+            'option_group' => 'company-details', // At the moment, this MUST be the slugified 'tab' value @TODO Fix this!!
+            'id' => 'company-details',
+            'title' => 'Company Details',
+            'description' => 'The company details.',
+            'fields' =>[
+                [
+                    'type' => 'text',
+                    'name' => 'company_number',
+                    'title' => 'Company Number',
+                    'desc' => 'Enter your Company Number',
+                    'placeholder' => ''
+                ],
+                [
+                    'type' => 'textarea',
+                    'name' => 'company_descriptor',
+                    'title' => 'Company Descriptor',
+                    'desc' => 'Enter your company descriptor',
+                    'placeholder' => 'Acme Ltd is a company registered in...'
+                ],
+                [
+                    'type' => 'text',
+                    'name' => 'VAT_number',
+                    'title' => 'Company VAT Number',
+                    'desc' => 'Enter your Company VAT Number',
+                    'placeholder' => ''
+                ],
+            ],
+        ],
     ]
 ];
