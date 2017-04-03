@@ -7,10 +7,10 @@ return [
     ],
     'default_tab' => 'main',
     'page' => [
-        'page_title' => 'Carawebs Address',
+        'page_title' => 'Carawebs Contact',
         'menu_title' => 'Address & Contact Details',
         'capability' => 'manage_options',
-        'unique_page_slug' => 'carawebs-address-options-page',
+        'unique_page_slug' => 'carawebs-contact-options-page',
     ],
     'sections' => [
         [
@@ -65,6 +65,24 @@ return [
                     'title' => 'Country',
                     'default' => NULL,
                 ],
+                [
+                    'type' => 'text',
+                    'name' => 'landline_phone',
+                    'title' => 'Landline Phone',
+                    'default' => NULL,
+                ],
+                [
+                    'type' => 'text',
+                    'name' => 'mobile_phone',
+                    'title' => 'Mobile Phone',
+                    'default' => NULL,
+                ],
+                [
+                    'type' => 'text',
+                    'name' => 'email',
+                    'title' => 'Contact Email Address',
+                    'default' => NULL,
+                ]
             ]
         ],
         [
