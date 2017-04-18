@@ -114,6 +114,13 @@ return [
                     'desc' => 'Enter the URL of your Pinterest',
                     'placeholder' => ''
                 ],
+                [
+                    'type' => 'text',
+                    'name' => 'linkedin',
+                    'title' => 'LinkedIn',
+                    'desc' => 'Enter the URL of the LinkedIn account/group',
+                    'placeholder' => ''
+                ],
             ],
         ],
         [
