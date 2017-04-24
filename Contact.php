@@ -14,6 +14,8 @@ Domain Path:       /languages
 namespace Carawebs\Contact;
 
 use Carawebs\Settings;
+use Carawebs\Contact\Shortcodes\RegisterShortcodes;
+
 include __DIR__.'/Base.php';
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -42,7 +44,7 @@ class Contact extends Base
          return self::$instance;
     }
 
-    public function bootstrap(Settings\SettingsController $optionsPage, Data\Filters $dataFilters = NULL)
+    public function bootstrap(Settings\SettingsController $optionsPage, Data\Filters $dataFilters = NULL, RegisterShortcodes $shortcodes = NULL)
     {
         $this->autoload();
         $this->setPaths();
@@ -81,5 +83,6 @@ class Contact extends Base
 $plugin = Contact::getInstance();
 $plugin->bootstrap(
     new Settings\SettingsController,
-    new Data\Filters
+    new Data\Filters,
+    new RegisterShortcodes
 );
