@@ -154,5 +154,22 @@ return [
                 ],
             ],
         ],
+        [
+            'tab' => 'Email List',
+            'option_name' => 'carawebs_email_list',
+            'option_group' => 'email-list', // At the moment, this MUST be the slugified 'tab' value @TODO Fix this!!
+            'id' => 'email-list',
+            'title' => 'Email List',
+            'description' => 'The email list.',
+            'fields' =>[
+                [
+                    'type' => 'text',
+                    'name' => 'list_url',
+                    'title' => 'List URL',
+                    'desc' => 'Enter the list URL',
+                    'placeholder' => ''
+                ],
+            ],
+        ],
     ]
 ];
