@@ -23,7 +23,6 @@ class ContactButton implements Shortcode {
     {
         $this->setDefaultContactStrings();
         $this->defaultContactDetails = new Combined();
-        // var_dump($this->defaultContactDetails);
     }
 
     public function handler( $atts, $content = NULL )
