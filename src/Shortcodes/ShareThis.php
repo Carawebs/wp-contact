@@ -1,8 +1,7 @@
 <?php
 namespace Carawebs\Contact\Shortcodes;
 
-use Carawebs\Contact\Views\PartialSelector;
-//use Carawebs\Display;
+use Carawebs\Contact\Traits\PartialSelector;
 
 /**
 * Handler for Share This button shortcode

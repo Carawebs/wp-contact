@@ -2,7 +2,7 @@
 namespace Carawebs\Contact\Shortcodes;
 
 use Carawebs\Contact\Views;
-use Carawebs\Contact\Views\PartialSelector;
+use Carawebs\Contact\Traits\PartialSelector;
 
 /**
 * Hook function for CTA shortcode
