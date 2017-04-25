@@ -29,23 +29,23 @@ class ContactButton implements Shortcode {
     {
         $attributes = shortcode_atts([
             'intro_text' => '',
-            'align'      => 'left',
-            'text'       => $this->defaults['text'] ?? NULL,
-            'prefix'     => $this->defaults['prefix'] ?? NULL,
-            'classes'    => ''
+            'align' => 'left',
+            'text' => $this->defaults['text'] ?? NULL,
+            'mobile_view_text' => $this->defaults['mobileViewText'] ?? NULL,
+            'classes' => ''
         ], $atts );
 
         $args = [
-            'CTA_intro'   => $attributes['intro_text'],
-            'align'       => $attributes['align'],
-            'include'     => [
+            'intro' => $attributes['intro_text'],
+            'align' => $attributes['align'],
+            'include' => [
                 $this->defaults['classname'] => [
-                    'prefix'=>$attributes['prefix'],
+                    'mobileViewText'=>$attributes['mobile_view_text'],
                     'text'=>$attributes['text']
                 ]
             ],
-            'type'        => $this->defaults['type'],
-            'btn_classes' => explode( ', ', $attributes['classes'])
+            'type' => $this->defaults['type'],
+            'classes' => explode( ',', preg_replace('/\s/', '', $attributes['classes']))
         ];
 
         ob_start();
@@ -60,7 +60,7 @@ class ContactButton implements Shortcode {
     *
     * @param [type] $args [description]
     */
-    public function set_defaults($args = [])
+    public function setDefaults($args = [])
     {
         $this->defaults = $args;
     }
@@ -68,8 +68,8 @@ class ContactButton implements Shortcode {
     public function setDefaultContactStrings()
     {
         $this->defaultContactStrings = [
-            'email_link_text' => 'Email Us',
-            'email_button_text' => 'Button Email'
+            'emailText' => 'Email Us',
+            'emailMobileText' => 'Button Email'
         ];
     }
 }

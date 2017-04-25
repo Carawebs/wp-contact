@@ -15,4 +15,15 @@ trait PartialSelector {
             return ( dirname(__DIR__) . '/partials/' . $partial . '.php' );
         }
     }
+
+    public static function static_partial_selector( $partial ) {
+        $override = get_template_directory() . '/templates/' . $partial . '.php';
+        // die(var_dump($override));
+
+        if ( file_exists( $override ) ) {
+            return ( $override );
+        } else {
+            return ( dirname(__DIR__) . '/' . $partial . '.php' );
+        }
+    }
 }

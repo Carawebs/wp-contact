@@ -22,9 +22,9 @@ class ControllableContactAction
     * @param  array $args Arguments extracted to build the call to action
     * @return string      HTML markup of the call to action
     */
-    public static function display( $args = [] )
+    public static function display($args = [])
     {
-        if ( ! is_array( $args['include'] ) || empty( $args['include'] ) ) {
+        if (! is_array($args['include']) || empty($args['include'])) {
             return;
         }
         // Set up rational defaults
@@ -38,50 +38,46 @@ class ControllableContactAction
         $CTA_intro = $args['CTA_intro'] ?? NULL;
 
         ob_start();
-        echo ! empty( $CTA_title ) ? '<h2 class="call-to-action">' . esc_html( $CTA_title ) . '</h2>' : NULL;
+        echo ! empty($CTA_title) ? '<h2 class="call-to-action">' . esc_html($CTA_title) . '</h2>' : NULL;
         ?>
         <div class="call-to-action text-<?= $align; ?>">
             <?php
-            echo ! empty( $CTA_intro ) ? '<p>' . esc_html( $CTA_intro ) . '</p>' : NULL;
+            echo ! empty($CTA_intro) ? '<p>' . esc_html($CTA_intro) . '</p>' : NULL;
             echo 'list' === $format ? "<ul class='call-to-action'>" : NULL;
+
             foreach ($include as $type => $values) {
-
-                $classname = "Carawebs\\Display\\" . $type;
                 $classname = __NAMESPACE__ ."\\". $type;
-                $args['desktop_text'] = $values['desktop_text']   ?? NULL;
-                $args['mobile_text'] = $values['mobile_text'] ?? NULL;
+                $args['text'] = $values['text'] ?? NULL;
+                $args['mobileViewText'] = $values['mobileViewText'] ?? NULL;
                 $args['override'] = $values['override'] ?? NULL;
-                unset( $args['include'] );                   // No need to pass `$args['include']`
-                $class = strtolower( $type );                // CSS class for li
-                $output = ( $classname::$display( $args ) ); // $display = 'button' | 'text'
+                unset($args['include']); // No need to pass `$args['include']`
+                $class = strtolower($type); // CSS class for li
+                // die(var_dump($args));
+                $output = ($classname::$display($args)); // $display = 'button' | 'text'
 
-                echo ! empty ( $output )
-                    ? 'list' === $format
-                        ? "<li class='$class'>$output</li>"
-                        : $output
-                    : NULL;
-
+                echo !empty ($output)
+                ? 'list' === $format
+                    ? "<li class='$class'>$output</li>"
+                    : $output
+                : NULL;
             }
-
             echo 'list' === $format ? "</ul>" : NULL;
-
             ?>
         </div>
         <?php
-
         echo ob_get_clean();
     }
 
     /**
     * Output buttons.
     *
-    * @param  array $args  Arguments extracted to build the call to action
-    * @return array        Amended arguments
+    * @param  array $args Arguments to build the button
+    * @return string Button markup
     */
-    public static function buttons( $args = [] )
+    public static function buttons($args = [])
     {
         $args['display'] = "button";
-        return self::display( $args );
+        return self::display($args);
     }
 
     /**
@@ -90,10 +86,10 @@ class ControllableContactAction
     * @param  array $args  Arguments extracted to build the call to action
     * @return array        Amended arguments
     */
-    public static function text( $args = [] )
+    public static function text($args = [])
     {
         $args['display'] = "text";
-        return self::display( $args );
+        return self::display($args);
     }
 
     /**
@@ -102,10 +98,10 @@ class ControllableContactAction
     * @param  array $args  Arguments extracted to build the call to action
     * @return array        Amended arguments
     */
-    public static function list( $args = [] )
+    public static function list($args = [])
     {
         $args['display'] = 'text';
         $args['format'] = 'list';
-        return self::display( $args );
+        return self::display($args);
     }
 }
