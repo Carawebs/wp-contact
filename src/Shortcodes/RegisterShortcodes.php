@@ -24,7 +24,7 @@ class RegisterShortcodes {
             // 'MobileButton'    => 'MobileButton',
             // 'LandlineButton'  => 'LandlineButton',
             'EmailButton'     => 'EmailButton',
-            // 'MailchimpForm'   => 'MailchimpForm',
+            'MailchimpForm'   => 'MailchimpForm',
             // 'PricingTable'    => 'PricingTable',
             // 'NextSection'     => 'NextSection',
             // 'ContactForm'     => 'ContactForm',
