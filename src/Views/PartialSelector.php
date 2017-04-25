@@ -9,7 +9,6 @@ trait PartialSelector {
 
     public function partial_selector( $partial )
     {
-        var_dump(get_template_directory() . $partial . '.php');
         if ( file_exists( get_template_directory() .'/'. $partial . '.php' ) ) {
             return ( get_template_directory() .'/'. $partial . '.php' );
         } else {
