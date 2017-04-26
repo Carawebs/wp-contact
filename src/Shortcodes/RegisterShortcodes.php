@@ -20,17 +20,15 @@ class RegisterShortcodes {
      */
     public function set_shortcodes( array $override = [] ) {
         $shortcodes = [
-            'ShareThis'           => 'ShareThis',
-            // 'MobileButton'    => 'MobileButton',
-            // 'LandlineButton'  => 'LandlineButton',
-            'EmailButton'     => 'EmailButton',
-            'MailchimpForm'   => 'MailchimpForm',
-            // 'PricingTable'    => 'PricingTable',
-            // 'NextSection'     => 'NextSection',
+            'ShareThis' => 'ShareThis',
+            'MobileButton' => 'MobileButton',
+            'LandlineButton' => 'LandlineButton',
+            'EmailButton' => 'EmailButton',
+            'MailchimpForm' => 'MailchimpForm',
+            'SocialFollow' => 'SocialFollow',
             // 'ContactForm'     => 'ContactForm',
             // 'ContactModal'    => 'ContactModal',
         ];
-
         $this->shortcodes = apply_filters('carawebs/contact-shortcodes', $shortcodes);
     }
 
