@@ -34,6 +34,8 @@ abstract class ContactAction implements Shortcode {
             'landline' => $data['carawebs_address']['landline_phone'],
             'mobile' => $data['carawebs_address']['mobile_phone']
         ];
+
+        $this->socialMediaDetails = $data['carawebs_social'];
     }
 
     /**
@@ -51,30 +53,5 @@ abstract class ContactAction implements Shortcode {
     public function setDefaultContactStrings(array $args = [])
     {
         $this->defaultContactStrings = $args;
-    }
-
-    /**
-     * Return CSS classes for button.
-     *
-     * Merges in an editor defined array of CSS classes as required.
-     * @param array $specificDefinedClasses Display specific & editor defined classes
-     * @return array Final button classes
-     */
-    public static function cssClasses(array $specificDefinedClasses = NULL) : array
-    {
-        $btn_base = ['btn', 'btn-default'];
-        $mob_btn_base = ['btn', 'btn-default'];
-
-        $btn_classes = isset( $specificDefinedClasses )
-            ? array_merge( $btn_base, $specificDefinedClasses )
-            : $btn_base;
-        $btn_mobile_classes = isset( $args['mobileClasses'] )
-            ? array_merge( $mob_btn_base, $args['mobileClasses'] )
-            : $mob_btn_base;
-
-        $desktop = implode( ' ', $btn_classes );
-        $mobile  = implode( ' ', $btn_mobile_classes );
-
-        return compact( 'desktop', 'mobile' );
     }
 }
