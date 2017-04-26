@@ -1,16 +1,14 @@
 <?php
 namespace Carawebs\Contact\Views;
 
-use Carawebs\Contact\Traits\Buttons;
 use Carawebs\Contact\Traits\PartialSelector;
 
 /**
 * Prepares data and renders email elements
 *
 */
-class EmailLink {
+class MakeEmailLink {
 
-    use Buttons;
     use PartialSelector;
 
     /**
@@ -19,34 +17,38 @@ class EmailLink {
     * @param  array  $args   Array of arguments
     * @return string         HTML for a click to call button
     */
-    public static function button( array $args = [] )
+    public static function button(array $args = [])
     {
-        $classes = self::cssClasses( $args );
-        $desktopClasses = $classes['desktop'];
-        $mobileClasses = $classes['mobile'];
-        $icon = ! empty( $args['icon'] )
-            ? $args['icon']
-            : '<i class="email-icon"></i>';
-        $desktop_text = ! empty( $args['text'] )
-            ? $args['text']
-            : "Email Us";
-        $mobile_text = ! empty( $args['mobileViewText'] )
-            ? $args['mobileViewText']
-            : "Email Us";
-
-        $email = empty( $email ) ? self::get_email() : $email;
-        if( empty( $email ) ) { return; }
-
-        ob_start();
-        include( self::static_partial_selector('partials/buttons/email') );
-        return ob_get_clean();
+        return self::buildLink($args, 'button');
     }
 
     /**
-    * Render HTML markup for a click to call link/text showing the number
+     * [buildLink description]
+     * @param [type] $args [description]
+     */
+    private static function buildLink(array $args, $type)
+    {
+        $email = empty($args['email']) ? self::get_email() : $args['email'];
+        if(empty($email)) { return; }
+        $desktopClasses = $args['classes']['desktop'];
+        $mobileClasses = $args['classes']['mobile'];
+        $icon = !empty($args['icon']) ? $args['icon'] : NULL;
+        $desktop_text = !empty($args['text']) ? $args['text'] : "Email Us";
+        $mobile_text = !empty($args['mobileViewText']) ? $args['mobileViewText'] : "Email Us";
+
+        ob_start();
+        if ('button' === $type) {
+            include(self::static_partial_selector('partials/buttons/email'));
+        } elseif ('text' === $type) {
+            include(self::static_partial_selector('partials/text-link/email'));
+        }
+        return ob_get_clean();
+    }
+
+
+    /**
+    * Render HTML markup for an email link
     *
-    * At large screen sizes, display the number as text. At small screen sizes, show a
-    * link that calls the relevant number on click.
     * @param  array  $args   Array of arguments
     * @return string         HTML for the number/number link
     */
