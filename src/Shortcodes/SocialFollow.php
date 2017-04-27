@@ -19,11 +19,12 @@ class SocialFollow extends ContactAction
         foreach ($this->socialMediaDetails as $key => $value) {
             if(empty($value)) continue;
             $socialLinks[$key] = [
-                'name' => ucfirst($key),
+                'text' => ucfirst($key),
                 'link' => $value
             ];
         }
         if (empty($socialLinks)) return;
+        $socialLinks = apply_filters('carawebs-contact/social-links', $socialLinks);
 
         ob_start();
         include($this->static_partial_selector('partials/social/list'));
