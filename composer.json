@@ -15,6 +15,6 @@
         }
     },
     "require": {
-        "carawebs/wp-plugin-settings": "1.0.3"
+        "carawebs/wp-plugin-settings": "^1.0"
     }
 }
