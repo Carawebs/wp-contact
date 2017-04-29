@@ -46,7 +46,6 @@ class EmailLink extends ContactAction {
     protected function output(array $args)
     {
         $args['linkClasses'] = array_merge(['email-link'], $args['classes']);
-        var_dump($args);
         ob_start();
         echo \Carawebs\Contact\Views\MakeEmailLink::text($args);
         return ob_get_clean();
