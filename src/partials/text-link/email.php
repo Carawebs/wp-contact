@@ -2,5 +2,5 @@
 
 ?>
 <a href="mailto:<?= $email; ?>" class="<?= $desktopClasses; ?>">
-    <?= $icon; ?><?= ! empty( $desktop_text ) ? $desktop_text : NULL; ?>
-</a>
+    <?= $icon; ?><?= !empty($desktop_text) ? $desktop_text : NULL; ?>
+</a><?php

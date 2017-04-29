@@ -8,22 +8,23 @@ namespace Carawebs\Contact\Shortcodes;
 * 'after_setup_theme' WP hook.
 */
 class RegisterShortcodes {
-    function __construct( array $widgets = [] ) {
-        $this->set_shortcodes();
+    function __construct(array $widgets = []) {
+        $this->setShortcodes();
         $this->init();
     }
 
     /**
      * Set shortcodes.
      *
-     * @param [type] $override [description]
+     * @param array $override Override shortcode array if necessary.
      */
-    public function set_shortcodes( array $override = [] ) {
+    public function setShortcodes(array $override = []) {
         $shortcodes = [
             'ShareThis' => 'ShareThis',
             'MobileButton' => 'MobileButton',
             'LandlineButton' => 'LandlineButton',
             'EmailButton' => 'EmailButton',
+            'EmailLink' => 'EmailLink',
             'MailchimpForm' => 'MailchimpForm',
             'SocialFollow' => 'SocialFollow',
             // 'ContactForm'     => 'ContactForm',
@@ -46,7 +47,7 @@ class RegisterShortcodes {
         foreach ($this->shortcodes as $key => $value) {
             $shortcode = 'Carawebs\\Contact\\Shortcodes\\' . $value;
             if ( class_exists( $shortcode ) ) {
-                add_shortcode( $key, [ new $shortcode(), 'handler'] );
+                add_shortcode($key, [new $shortcode(), 'handler']);
             }
         }
     }

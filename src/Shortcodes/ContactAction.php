@@ -23,7 +23,6 @@ abstract class ContactAction implements Shortcode {
 
     public function __construct()
     {
-        //$this->setDefaultContactStrings();
         $this->setDefaultContactDetails(new Combined);
     }
 
