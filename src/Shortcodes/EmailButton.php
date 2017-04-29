@@ -15,6 +15,7 @@ class EmailButton extends EmailLink {
         // Build all button classes
         $args['classes'] = $this->buttonClasses($args['classes']);
         $args['icon'] = '<i class="email-icon"></i>&nbsp;';
+        var_dump($args);
         ob_start();
         echo \Carawebs\Contact\Views\MakeEmailLink::button( $args );
         return ob_get_clean();

@@ -37,13 +37,16 @@ class EmailLink extends ContactAction {
             'email' => $this->defaultContactDetails['email'],
         ], $atts );
         $args['text'] = !empty($content) ? $content : $args['text'];
-        $args['classes'] = explode( ',', preg_replace('/\s/', '', $args['classes']));
+        $args['classes'] = !empty($args['classes'])
+            ? explode( ',', preg_replace('/\s/', '', $args['classes']))
+            : [];
         return $this->output($args);
     }
 
     protected function output(array $args)
     {
-        //$args['icon'] = '<i class="email-icon"></i>';
+        $args['linkClasses'] = array_merge(['email-link'], $args['classes']);
+        var_dump($args);
         ob_start();
         echo \Carawebs\Contact\Views\MakeEmailLink::text($args);
         return ob_get_clean();
