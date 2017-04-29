@@ -43,7 +43,7 @@ class EmailLink extends ContactAction {
 
     protected function output(array $args)
     {
-        $args['icon'] = '<i class="email-icon"></i>';
+        //$args['icon'] = '<i class="email-icon"></i>';
         ob_start();
         echo \Carawebs\Contact\Views\MakeEmailLink::text($args);
         return ob_get_clean();
