@@ -43,7 +43,7 @@ abstract class ContactAction implements Shortcode {
             ];
         }
 
-        $this->socialMediaDetails = empty($data['carawebs_social']) ? $data['carawebs_social'] : NULL;
+        $this->socialMediaDetails = !empty($data['carawebs_social']) ? $data['carawebs_social'] : NULL;
     }
 
     /**
