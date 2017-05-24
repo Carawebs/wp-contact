@@ -28,14 +28,22 @@ abstract class ContactAction implements Shortcode {
 
     public function setDefaultContactDetails(Combined $data)
     {
-        if(empty($data)) return;
-        $this->defaultContactDetails = $data['carawebs_social'] + [
-            'email' => !empty($data['carawebs_address']['email']) ? $data['carawebs_address']['email'] : NULL,
-            'landline' => !empty($data['carawebs_address']['landline_phone']) ? $data['carawebs_address']['landline_phone'] : NULL,
-            'mobile' => !empty($data['carawebs_address']['mobile_phone']) ? $data['carawebs_address']['mobile_phone'] : NULL,
-        ];
+        if (empty($data)) return;
+        if (is_array($data['carawebs_social'])) {
+            $this->defaultContactDetails = $data['carawebs_social'] + [
+                'email' => !empty($data['carawebs_address']['email']) ? $data['carawebs_address']['email'] : NULL,
+                'landline' => !empty($data['carawebs_address']['landline_phone']) ? $data['carawebs_address']['landline_phone'] : NULL,
+                'mobile' => !empty($data['carawebs_address']['mobile_phone']) ? $data['carawebs_address']['mobile_phone'] : NULL,
+            ];
+        } else {
+            $this->defaultContactDetails = [
+                'email' => !empty($data['carawebs_address']['email']) ? $data['carawebs_address']['email'] : NULL,
+                'landline' => !empty($data['carawebs_address']['landline_phone']) ? $data['carawebs_address']['landline_phone'] : NULL,
+                'mobile' => !empty($data['carawebs_address']['mobile_phone']) ? $data['carawebs_address']['mobile_phone'] : NULL,
+            ];
+        }
 
-        $this->socialMediaDetails = $data['carawebs_social'];
+        $this->socialMediaDetails = empty($data['carawebs_social']) ? $data['carawebs_social'] : NULL;
     }
 
     /**
