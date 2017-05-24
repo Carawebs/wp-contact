@@ -29,9 +29,9 @@ abstract class ContactAction implements Shortcode {
     public function setDefaultContactDetails(Combined $data)
     {
         $this->defaultContactDetails = $data['carawebs_social'] + [
-            'email' => $data['carawebs_address']['email'],
-            'landline' => $data['carawebs_address']['landline_phone'],
-            'mobile' => $data['carawebs_address']['mobile_phone']
+            'email' => !empty($data['carawebs_address']['email']) ? $data['carawebs_address']['email'] : NULL,
+            'landline' => !empty($data['carawebs_address']['landline_phone']) ? $data['carawebs_address']['landline_phone'] : NULL,
+            'mobile' => !empty($data['carawebs_address']['mobile_phone']) ? $data['carawebs_address']['mobile_phone'] : NULL,
         ];
 
         $this->socialMediaDetails = $data['carawebs_social'];
