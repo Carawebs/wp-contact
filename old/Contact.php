@@ -1,4 +1,5 @@
 <?php
+echo "no";
 /*
 Plugin Name:       Carawebs Contact
 Plugin URI:        http://carawebs.com
@@ -18,7 +19,7 @@ use Carawebs\Contact\Shortcodes\RegisterShortcodes;
 
 include __DIR__.'/Base.php';
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if (!defined('ABSPATH')) exit;
 /**
 * Singleton class to start the plugin.
 */
@@ -59,11 +60,21 @@ class Contact extends Base
     {
         $path = dirname(__FILE__) . '/config/';
         $this->config = $path . '/options-page.php';
-    }
+    }// $plugin = Contact::getInstance();
+// $plugin->bootstrap(
+//     new Settings\SettingsController,
+//     new Data\Filters,
+//     new RegisterShortcodes
+// );
 
     private function onActivation()
     {
-        register_activation_hook( __FILE__, function() {
+        register_activation_hook( __// $plugin = Contact::getInstance();
+// $plugin->bootstrap(
+//     new Settings\SettingsController,
+//     new Data\Filters,
+//     new RegisterShortcodes
+// );FILE__, function() {
             $this->autoload();
             //$this->setPaths();
             //$this->setupCustomPostTypes->setupCPTs(); // --------------------
@@ -80,9 +91,9 @@ class Contact extends Base
     }
 }
 
-$plugin = Contact::getInstance();
-$plugin->bootstrap(
-    new Settings\SettingsController,
-    new Data\Filters,
-    new RegisterShortcodes
-);
+// $plugin = Contact::getInstance();
+// $plugin->bootstrap(
+//     new Settings\SettingsController,
+//     new Data\Filters,
+//     new RegisterShortcodes
+// );

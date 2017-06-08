@@ -15,4 +15,9 @@ class Address extends Base
     {
         $this->container = get_option('carawebs_address');
     }
+
+    public function getAddress()
+    {
+        return $this->container;
+    }
 }
