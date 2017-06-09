@@ -6,7 +6,6 @@ namespace Carawebs\Contact\Shortcodes;
  */
 class LandlineButton extends PhoneButton
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -25,5 +24,4 @@ class LandlineButton extends PhoneButton
         $icon = '<i class="mobile-icon"></i>&nbsp;';
         $this->setIcon($icon);
     }
-
 }

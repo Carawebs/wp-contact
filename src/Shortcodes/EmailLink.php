@@ -2,6 +2,7 @@
 namespace Carawebs\Contact\Shortcodes;
 
 use Carawebs\Contact\Traits\CssClasses;
+use Carawebs\Contact\Views\MakeEmailLink;
 
 /**
 * Hook function for Email Button shortcode
@@ -47,7 +48,7 @@ class EmailLink extends ContactAction {
     {
         $args['linkClasses'] = array_merge(['email-link'], $args['classes']);
         ob_start();
-        echo \Carawebs\Contact\Views\MakeEmailLink::text($args);
+        echo MakeEmailLink::text($args);
         return ob_get_clean();
     }
 }

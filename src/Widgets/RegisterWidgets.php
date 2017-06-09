@@ -32,6 +32,8 @@ class RegisterWidgets {
         if (empty($widgets)) {
             $this->widgets = [
                 'Address',
+                'Contact',
+                'CallToAction',
             ];
         } else {
             $this->widgets = $widgets;

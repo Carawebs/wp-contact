@@ -17,7 +17,6 @@ use Carawebs\Contact\Traits\PartialSelector;
 *
 */
 class Address extends \WP_Widget {
-
     use PartialSelector;
 
     /**
