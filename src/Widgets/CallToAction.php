@@ -1,21 +1,19 @@
 <?php
 namespace Carawebs\Contact\Widgets;
 
-use Carawebs\Contact\Views\MakeEmailLink;
-use Carawebs\Contact\Views\MakePhoneLink;
-use Carawebs\Contact\Views\OutputMultipleContacts as Output;
+use Carawebs\Contact\Output\ContactMethods;
 use Carawebs\Contact\Data\Address as Data;
 use Carawebs\Contact\Traits\PartialSelector;
-use Carawebs\Contact\Data\DefaultSiteContactLabels as Labels;
 
 class CallToAction extends \WP_Widget {
 
     /**
     * Sets up the widgets name etc
     */
-    public function __construct(Data $data, Labels $labels, Output $output)
+    public function __construct(Data $data, ContactMethods $contactMethods)
     {
-        $this->output = $output;
+        $this->data = $data;
+        $this->contactMethods = $contactMethods;
         $widget_ops = array(
             'classname' => 'call-to-action',
             'description' => 'Call to Action',
@@ -31,31 +29,25 @@ class CallToAction extends \WP_Widget {
     */
     public function widget($widgetArgs, $instance)
     {
-
-        $types = $instance['type'];
-        $button_classes = ['btn'];
         $display = $instance['display'] ?? 'buttons';
-        $include = $this->includeData($types, $instance);
-
         $title = !empty($instance['title'])
         ? '<h3>' . apply_filters( 'widget_title', $instance['title'] ) . '</h3>'
         : NULL;
 
         $args = [
-            'btn_classes' => $button_classes,
-            'include'     => $include
+            'align' => !empty($instance['align']) ? $instance['align'] : 'left',
+            'btn_classes' => ['btn'],
+            'includeContactMethods' => $this->includeData($instance),
         ];
 
         echo $widgetArgs['before_widget'];
         echo $title;
         echo !empty($instance['intro']) ? "<p>{$instance['intro']}</p>" : NULL;
 
-        if ('buttons' === $display) {
-            OutputMultipleContacts::buttons( $args );
-        } elseif ('list' === $display) {
-            $this->output->list($args);
+        $outputArray = $this->contactMethods->createContactMethod($args['includeContactMethods'], $display);
+        foreach ($outputArray as $key => $value) {
+            echo $value;
         }
-
         echo $widgetArgs['after_widget'];
     }
 
@@ -67,11 +59,11 @@ class CallToAction extends \WP_Widget {
      * @param array $types
      * @param array $instance
      */
-    public function includeData($types, $instance)
+    public function includeData($instance)
     {
         $include = [];
-        foreach ($types as $type) {
-            $include[$type] = $this->text_values( $type, $instance );
+        foreach ($instance['type'] as $type) {
+            $include[$type] = $this->contactValues( $type, $instance );
         }
         return $include;
     }
@@ -85,16 +77,31 @@ class CallToAction extends \WP_Widget {
     * @param  array  $instance
     * @return array        The prefix (desktop) and text (mobile) values to be used in element
     */
-    public function text_values( $type, $instance ) {
-
+    public function contactValues( $type, $instance )
+    {
         $desktop_text = $instance[$type . '_text_desktop'] ?? NULL;
         $mobile_text = $instance[$type . '_text_mobile'] ?? NULL;
-
         return [
+            'value' => $this->setValue($type),
             'desktop_text' => $instance[$type . '_text_desktop'] ?? NULL,
-            'mobile_text' => $instance[$type . '_text_mobile'] ?? NULL
+            'mobile_text' => $instance[$type . '_text_mobile'] ?? NULL,
         ];
+    }
 
+    public function setValue($type)
+    {
+        switch ($type) {
+            case 'mobile':
+                return $this->data['mobile_phone'];
+                break;
+            case 'landline':
+                return $this->data['landline_phone'];
+                break;
+            case 'email':
+                return $this->data['email'];
+                break;
+            return;
+        }
     }
 
     /**
@@ -103,8 +110,8 @@ class CallToAction extends \WP_Widget {
     * @param  string $type   'landline'|'mobile'|'email'
     * @return string         The classname
     */
-    public function classname( $type ) {
-
+    public function classname( $type )
+    {
         if ( $type == 'landline' ) {
             return 'ClickLandline';
         }
@@ -114,7 +121,6 @@ class CallToAction extends \WP_Widget {
         if ( $type == 'email' ) {
             return 'EmailLink';
         }
-
     }
 
     /**
@@ -122,8 +128,8 @@ class CallToAction extends \WP_Widget {
     *
     * @param array $instance The widget options
     */
-    public function form( $instance ) {
-
+    public function form( $instance )
+    {
         $title = ! empty( $instance['title'] )   ? esc_attr( $instance['title'] ) : NULL;
         $intro = ! empty( $instance['intro'] )   ? esc_attr( $instance['intro'] ) : NULL;
         $type = ! empty( $instance['type'] )    ? $instance['type'] : [];

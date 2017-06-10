@@ -1,23 +1,17 @@
 <?php
-
 namespace Carawebs\Contact\Widgets;
 
-use Carawebs\Contact\Views\MakeEmailLink;
-use Carawebs\Contact\Views\MakePhoneLink;
-use Carawebs\Contact\Data\Address as Data;
+use Carawebs\Contact\Output\ContactMethods;
 use Carawebs\Contact\Traits\PartialSelector;
-use Carawebs\Contact\Data\DefaultSiteContactLabels as Labels;
 
 class Contact extends \WP_Widget {
     use PartialSelector;
-
     /**
     * Sets up the widgets name etc
     */
-    public function __construct(Data $data, Labels $labels)
+    public function __construct(ContactMethods $contactMethods)
     {
-        $this->data = $data;
-        $this->labels = $labels;
+        $this->contactMethods = $contactMethods;
         $widget_ops = array(
             'classname' => 'contact',
             'description' => 'Contact Links',
@@ -31,7 +25,7 @@ class Contact extends \WP_Widget {
     * @param array $args
     * @param array $instance
     */
-    public function widget( $args, $instance )
+    public function widget($args, $instance)
     {
         $title = !empty($instance['title']) ? apply_filters('widget_title', $instance['title']) : NULL;
         $additional = [];
@@ -39,101 +33,17 @@ class Contact extends \WP_Widget {
             $additional = [
                 'type' => $instance['custom_type'],
                 'value' => $instance['custom_value'] ?? NULL,
-                'label' => $instance['custom_label'] ?? NULL,
-                'mobile_label' => $instance['custom_mobile_label'] ?? NULL
+                'text' => $instance['custom_label'] ?? NULL,
+                'xs_text' => $instance['custom_mobile_label'] ?? NULL
             ];
         }
 
         echo $args['before_widget'];
         echo "<h3>$title</h3>";
         echo !empty($instance['intro']) ? "<p>{$instance['intro']}</p>" : null;
-        $contacts = $this->contacts($additional);
+        $contacts = $this->contactMethods->all($additional);
         include $this->partialSelector('contact-widget');
         echo $args['after_widget'];
-    }
-
-    /**
-     * Contacts markup.
-     * 
-     * @param  array $additional Additional contact methods to include.
-     * @return array             Data to build contacts markup.
-     */
-    private function contacts(array $additional = NULL)
-    {
-        if (is_array($additional) && ! empty($additional)) {
-            switch ($additional['type']) {
-                case 'mobile':
-                $extra = MakePhoneLink::text([
-                    'icon' => '<i class="mobile-icon"></i>&nbsp;',
-                    'text'  => $additional['label'],
-                    'mobile_text' => $additional['mobile_label'],
-                    'number' => $additional['value'],
-                ]);
-                break;
-
-                case 'landline':
-                $extra = MakePhoneLink::text([
-                    'icon' => '<i class="landline-icon"></i>&nbsp;',
-                    'text'  => $additional['label'],
-                    'mobile_text' => $additional['mobile_label'],
-                    'number' => $additional['value']
-                ]);
-                break;
-
-                case 'email':
-                $extra = MakeEmailLink::text([
-                    'icon' => '<i class="email-icon"></i>&nbsp;',
-                    'text'  => $additional['label'],// add fallback
-                    'email' => $additional['value']
-                ]);
-                break;
-
-                default:
-                # code...
-                break;
-            }
-        }
-
-        $email = MakeEmailLink::text([
-            'icon' => '<i class="email-icon"></i>&nbsp;',
-            'email' => $this->data['email'],
-            'link_text' => $this->labels['email_link_text'],
-        ]);
-
-        $landline = MakePhoneLink::text([
-            'icon' => '<i class="landline-icon"></i>&nbsp;',
-            'number' => $this->data['landline_phone'],
-            'text'  => $this->labels['landline_prefix'],
-            'xs_text' => $this->labels['landline_clicktext']
-        ]);
-
-        $mobile = MakePhoneLink::text([
-            'icon' => '<i class="mobile-icon"></i>&nbsp;',
-            'number' => $this->data['mobile_phone'],
-            'text'  => $this->labels['mobile_prefix'],
-            'xs_text' => $this->labels['mobile_clicktext']
-        ]);
-
-        $contacts = [];
-
-        if(!empty($email)) {
-            $contacts['email'] = $email;
-        }
-
-        if (!empty($landline)) {
-            $contacts['landline'] = $landline;
-        }
-
-        if (!empty($mobile)) {
-            $contacts['mobile'] = $mobile;
-        }
-
-        if (!empty($extra)) {
-            $class = 'extra '. $additional['type'];
-            $contacts[$class] = $extra;
-        }
-
-        return $contacts;
     }
 
     /**
@@ -141,15 +51,14 @@ class Contact extends \WP_Widget {
     *
     * @param array $instance The widget options
     */
-    public function form( $instance ) {
-
-        // outputs the options form on the widget admin page
-        $title  = ! empty( $instance['title'] ) ? esc_attr( $instance['title'] ) : NULL;
-        $intro  = ! empty( $instance['intro'] ) ? esc_attr( $instance['intro'] ) : NULL;
-        $custom_type = ! empty( $instance['custom_type'] ) ? esc_attr( $instance['custom_type'] ) : NULL;
-        $custom_value = ! empty( $instance['custom_value'] ) ? esc_attr( $instance['custom_value'] ) : NULL;
-        $custom_label = ! empty( $instance['custom_label'] ) ? esc_attr( $instance['custom_label'] ) : NULL;
-        $custom_mobile_label = ! empty( $instance['custom_mobile_label'] ) ? esc_attr( $instance['custom_mobile_label'] ) : NULL;
+    public function form($instance)
+    {
+        $title  = ! empty($instance['title']) ? esc_attr($instance['title']) : NULL;
+        $intro  = ! empty($instance['intro']) ? esc_attr($instance['intro']) : NULL;
+        $custom_type = ! empty($instance['custom_type']) ? esc_attr($instance['custom_type']) : NULL;
+        $custom_value = ! empty($instance['custom_value']) ? esc_attr($instance['custom_value']) : NULL;
+        $custom_label = ! empty($instance['custom_label']) ? esc_attr($instance['custom_label']) : NULL;
+        $custom_mobile_label = ! empty($instance['custom_mobile_label']) ? esc_attr($instance['custom_mobile_label']) : NULL;
         $custom_types = [
             'Mobile phone' => 'mobile',
             'Landline phone' => 'landline',
@@ -175,7 +84,7 @@ class Contact extends \WP_Widget {
             foreach ($custom_types as $key => $value) {
                 ?>
                 <label for="<?= $field ?>-<?= $i; ?>"><?= $key; ?></label>
-                <input type="radio" name="<?= $field; ?>" id="<?= $field; ?>-1" tabindex="<?= $i; ?>" value="<?= $value; ?>" <?php checked( $custom_type, $value ); ?> >
+                <input type="radio" name="<?= $field; ?>" id="<?= $field; ?>-1" tabindex="<?= $i; ?>" value="<?= $value; ?>" <?php checked($custom_type, $value); ?> >
                 <?php
             }
             ?>
@@ -202,31 +111,26 @@ class Contact extends \WP_Widget {
     * @param array $new_instance The new options
     * @param array $old_instance The previous options
     */
-    public function update( $new_instance, $old_instance ) {
-
+    public function update($new_instance, $old_instance)
+    {
         $formNonce = $_POST['social_nonce'];
-
         if (!wp_verify_nonce($formNonce, 'nonce')) {
-
-            echo json_encode(array(
-                'success' => false,
-                'message' => __('Nonce was not verified!', 'Carawebs')
-            ));
+            echo json_encode(
+                [
+                    'success' => false,
+                    'message' => __('Nonce was not verified!', 'Carawebs')
+                ]
+            );
             die;
-
         }
-
         // processes widget options to be saved
         $instance = $old_instance;
-        $instance['title'] = strip_tags( $new_instance['title'] );
-        $instance['intro'] = strip_tags( $new_instance['intro'] );
-        $instance['custom_type'] = strip_tags( $new_instance['custom_type'] );
-        $instance['custom_value'] = strip_tags( $new_instance['custom_value'] );
-        $instance['custom_label'] = strip_tags( $new_instance['custom_label'] );
-        $instance['custom_mobile_label'] = strip_tags( $new_instance['custom_mobile_label'] );
-
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['intro'] = strip_tags($new_instance['intro']);
+        $instance['custom_type'] = strip_tags($new_instance['custom_type']);
+        $instance['custom_value'] = strip_tags($new_instance['custom_value']);
+        $instance['custom_label'] = strip_tags($new_instance['custom_label']);
+        $instance['custom_mobile_label'] = strip_tags($new_instance['custom_mobile_label']);
         return $instance;
-
     }
-
 }

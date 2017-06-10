@@ -37,7 +37,7 @@ class MakePhoneLink {
      * [buildLink description]
      * @param [type] $args [description]
      */
-    private static function buildLink(array $args, $type)
+    public static function buildLink(array $args, $type)
     {
         $number = $args['number'];
         $desktopClasses = !empty($args['classes']['desktop']) ? $args['classes']['desktop'] : NULL;

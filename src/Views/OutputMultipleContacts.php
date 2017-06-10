@@ -27,36 +27,28 @@ class OutputMultipleContacts {
     */
     public function display($args = [])
     {
-        if ( !is_array($args['include']) || empty($args['include'])) return;
-        // Set up rational defaults
-        $display = $args['display'] ?? 'button';
-        $align = $args['align'] ?? 'left';
-        $type = $args['type'] ?? NULL;
-        $includeContactMethods = $args['include'] ?? NULL;
-        $format = $args['format'] ?? NULL;
-        $CTA_title = $args['CTA_title'] ?? NULL;
-        $CTA_intro = $args['CTA_intro'] ?? NULL;
-        var_dump($includeContactMethods);
+        var_dump($args);
+        if ( !is_array($args['includeContactMethods']) || empty($args['includeContactMethods'])) return;
 
         ob_start();
-        echo !empty($CTA_title) ? '<h2 class="call-to-action">' . esc_html($CTA_title) . '</h2>' : NULL;
+        echo !empty($args['CTA_title'])
+        ? '<h2 class="call-to-action">' . esc_html($args['CTA_title']) . '</h2>'
+        : NULL;
         ?>
-        <div class="call-to-action text-<?= $align; ?>">
+        <div class="call-to-action text-<?= $args['align']; ?>">
             <?php
-            echo !empty($CTA_intro) ? '<p>' . esc_html($CTA_intro) . '</p>' : NULL;
-            $output = $this->buildContactMethods($includeContactMethods);
+            echo !empty($args['CTA_intro']) ? '<p>' . esc_html($args['CTA_intro']) . '</p>' : NULL;
+            $output = $this->buildContactMethods($args['includeContactMethods']);
             var_dump($output);
-            switch ($format) {
+            switch ($args['display']) {
                 case 'list':
-                echo "HELLLOOO";
                     include $this->partialSelector('contact-list');
                     break;
                 case 'buttons':
-                    # code...
+                    include $this->partialSelector('contact-list');
                     break;
-
                 default:
-                    # code...
+                    include $this->partialSelector('contact-list');
                     break;
             }
             ?>
@@ -67,13 +59,9 @@ class OutputMultipleContacts {
 
     private function buildContactMethods(array $includeContactMethods)
     {
+        $output = [];
         foreach ($includeContactMethods as $type => $values) {
-            $args['desktop_text'] = $values['desktop_text']   ?? NULL;
-            $args['mobile_text'] = $values['mobile_text'] ?? NULL;
-            $args['override'] = $values['override'] ?? NULL;
-            $args['class'] = strtolower($type); // CSS class for li
-            unset($args['include']); // No need to pass `$args['include']`
-            $output[] = "x";//( $classname::$display( $args ) ); // $display = 'button' | 'text'
+            $output[] = array_merge(['type' => $type], $values);
         }
         return $output;
     }
@@ -84,11 +72,10 @@ class OutputMultipleContacts {
     * @param  array $args  Arguments extracted to build the call to action
     * @return array        Amended arguments
     */
-    public static function buttons( $args = [] ) {
-
+    public function buttons($args = [])
+    {
         $args['display'] = "button";
-        return self::display( $args );
-
+        return $this->display($args);
     }
 
     /**
@@ -97,11 +84,10 @@ class OutputMultipleContacts {
     * @param  array $args  Arguments extracted to build the call to action
     * @return array        Amended arguments
     */
-    public static function text($args = [])
+    public function text($args = [])
     {
         $args['display'] = "text";
-        return self::display( $args );
-
+        return $this->display($args);
     }
 
     /**
@@ -110,12 +96,10 @@ class OutputMultipleContacts {
     * @param  array $args  Arguments extracted to build the call to action
     * @return array        Amended arguments
     */
-    public function list( $args = [] ) {
-
+    public function list($args = [])
+    {
         $args['display'] = 'text';
         $args['format'] = 'list';
-        return self::display( $args );
-
+        return $this->display( $args );
     }
-
 }
