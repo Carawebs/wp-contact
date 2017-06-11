@@ -34,7 +34,7 @@ class Contact extends \WP_Widget {
                 'type' => $instance['custom_type'],
                 'value' => $instance['custom_value'] ?? NULL,
                 'text' => $instance['custom_label'] ?? NULL,
-                'xs_text' => $instance['custom_mobile_label'] ?? NULL
+                'mobileViewText' => $instance['custom_mobile_label'] ?? NULL
             ];
         }
 

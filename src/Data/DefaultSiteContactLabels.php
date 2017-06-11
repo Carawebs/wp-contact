@@ -24,12 +24,12 @@ class DefaultSiteContactLabels extends Base {
     public function setSiteContactLabels()
     {
         $this->container = apply_filters( 'carawebs-contact/default-contact-labels', [
-            'email_link_text' => 'Email Us',
-            'email_button_text' => 'Email Us',
-            'landline_prefix' => 'Landline:',
-            'landline_clicktext' => 'Click to Call Main Office',
-            'mobile_prefix' => 'Mobile:',
-            'mobile_clicktext' => 'Click to Call our Mobile',
+            'emailText' => 'Email Us',
+            'emailMobileViewText' => 'Email Us Mob',
+            'landlineText' => 'Landline:',
+            'landlineClickText' => 'Click to Call Us',
+            'mobileText' => 'Mobile:',
+            'mobileClickText' => 'Click to Call our Mobile',
             'linked_in_text' => 'Follow us on Linked In',
             'twitter_text' => 'Follow us on Twitter',
             'pinterest_text' => 'Our Pinterest',

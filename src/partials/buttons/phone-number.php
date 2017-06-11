@@ -7,12 +7,12 @@
 
 ?>
 <span class="contact hidden-xs hidden-sm-down">
-  <span class="<?= $desktopClasses; ?>">
+  <span class="carawebs-contact phone-number button desktop<?= $desktopClasses; ?>">
     <?= $icon; ?><?= ! empty( $desktop_text ) ? $desktop_text . ' ' : NULL; ?><?= $number; ?>
   </span>
 </span>
 <span class="hidden-sm hidden-md hidden-lg hidden-md-up">
-  <a href="tel:<?= $number; ?>" class="<?= $mobileClasses; ?>">
+  <a href="tel:<?= $number; ?>" class="carawebs-contact phone-number button mobile<?= $mobileClasses; ?>">
     <span class="phone-text"><?= $mobile_text; ?></span>&nbsp;
     <?= $icon; ?>
   </a>

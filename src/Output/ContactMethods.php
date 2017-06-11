@@ -24,34 +24,23 @@ class ContactMethods {
         if (is_array($additional) && ! empty($additional)) {
             $extra = $this->contactMethodMarkup($additional);
         }
-
         $email = MakeEmailLink::text([
             'icon' => '<i class="email-icon"></i>&nbsp;',
             'email' => $this->data['email'],
-            'link_text' => $this->labels['email_link_text'],
+            'text' => $this->labels['emailText'],
         ]);
-
         $landline = MakePhoneLink::text([
             'icon' => '<i class="landline-icon"></i>&nbsp;',
             'number' => $this->data['landline_phone'],
-            'text'  => $this->labels['landline_prefix'],
-            'xs_text' => $this->labels['landline_clicktext']
+            'text'  => $this->labels['landlineText'],
+            'mobileViewText' => $this->labels['landlineClickText']
         ]);
-
-        // $mobile = MakePhoneLink::text([
-        //     'icon' => '<i class="mobile-icon"></i>&nbsp;',
-        //     'number' => $this->data['mobile_phone'],
-        //     'text'  => $this->labels['mobile_prefix'],
-        //     'xs_text' => $this->labels['mobile_clicktext']
-        // ]);
-        $mobArgs = [
-            'type' => 'mobile',
+        $mobile = MakePhoneLink::text([
             'icon' => '<i class="mobile-icon"></i>&nbsp;',
-            'value' => $this->data['mobile_phone'],
-            'text' => $this->labels['mobile_prefix'],
-            'xs_text' => $this->labels['mobile_clicktext']
-        ];
-        $mobile = $this->contactMethodMarkup($mobArgs, 'text');
+            'number' => $this->data['mobile_phone'],
+            'text'  => $this->labels['mobileText'],
+            'mobileViewText' => $this->labels['mobileClickText']
+        ]);
 
         $contacts = [];
         if(!empty($email)) {
@@ -71,21 +60,26 @@ class ContactMethods {
     }
 
     /**
-    * [contactMethodMarkup description]
-    * @param [type] $additional [description]
+    * Build markup for a given contact method.
+    *
+    * @param array $contactMethod Contact method arguments.
+    * @param string $display 'text'|'button'|'list'
     */
     public function contactMethodMarkup($contactMethod, $display = 'text')
     {
         if ('list' === $display) {
             $display = 'text';
         }
+        if ('buttons' === $display) {
+            $display = 'button';
+        }
         $output = NULL;
         switch ($contactMethod['type']) {
             case 'mobile':
             $output = MakePhoneLink::$display([
                 'icon' => '<i class="mobile-icon"></i>&nbsp;',
-                'text'  => $contactMethod['label'] ?? $this->labels['mobile_prefix'],
-                'mobile_text' => $contactMethod['mobile_label'] ?? $this->labels['mobile_clicktext'],
+                'text'  => $contactMethod['text'] ?? $this->labels['mobileText'],
+                'mobileViewText'  => !empty($contactMethod['mobileViewText']) ? $contactMethod['mobileViewText'] : $this->labels['mobileClickText'],
                 'number' => $contactMethod['value'],
             ]);
             break;
@@ -93,16 +87,19 @@ class ContactMethods {
             case 'landline':
             $output = MakePhoneLink::buildLink([
                 'icon' => '<i class="landline-icon"></i>&nbsp;',
-                'text'  => $contactMethod['label'],
-                'mobile_text' => $contactMethod['mobile_label'],
-                'number' => $contactMethod['value']
+                'text'  => !empty($contactMethod['text']) ? $contactMethod['text'] : $this->labels['landlineText'],
+                'mobileViewText'  => !empty($contactMethod['mobileViewText']) ? $contactMethod['mobileViewText'] : $this->labels['landlineClickText'],
+                'number' => $contactMethod['value'],
+                // Pass classes if necessary
+                //'classes' => ['desktop' => ['foo','bar']],
             ], $display);
             break;
 
             case 'email':
             $output = MakeEmailLink::$display([
                 'icon' => '<i class="email-icon"></i>&nbsp;',
-                'text'  => $contactMethod['label'],
+                'text'  => !empty($contactMethod['text']) ? $contactMethod['text'] : $this->labels['emailText'],
+                'mobileViewText'  => !empty($contactMethod['mobileViewText']) ? $contactMethod['mobileViewText'] : $this->labels['emailMobileViewText'],
                 'email' => $contactMethod['value']
             ]);
             break;
@@ -120,8 +117,8 @@ class ContactMethods {
     {
         $output = [];
         foreach ($contactMethods as $type => $attributes) {
-            $args['label'] = $attributes['desktop_text'];
-            $args['mobile_label'] = $attributes['mobile_text'];
+            $args['text'] = $attributes['text'];
+            $args['mobileViewText'] = $attributes['mobileViewText'];
             $args['value'] = $attributes['value'];
             $args['type'] = $type;
             $output[] = $this->contactMethodMarkup($args, $display);

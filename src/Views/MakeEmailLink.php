@@ -47,8 +47,8 @@ class MakeEmailLink {
         $mobileClasses = !empty($args['classes']['mobile']) ? $args['classes']['mobile'] : NULL;
         $linkClasses = !empty($args['linkClasses']) ? implode(' ', $args['linkClasses']) : NULL;
         $icon = !empty($args['icon']) ? $args['icon'] : NULL;
-        $desktop_text = !empty($args['text']) ? $args['text'] : "Email Us";
-        $mobile_text = !empty($args['mobileViewText']) ? $args['mobileViewText'] : "Email Us";
+        $text = !empty($args['text']) ? $args['text'] : "Email Us";
+        $mobileViewText = !empty($args['mobileViewText']) ? $args['mobileViewText'] : "Email Us";
 
         ob_start();
         if ('button' === $type) {
