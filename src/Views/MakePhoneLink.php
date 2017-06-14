@@ -41,7 +41,8 @@ class MakePhoneLink {
     {
         $number = $args['number'];
         $desktopClasses = !empty($args['classes']['desktop']) ? $args['classes']['desktop'] : NULL;
-        $desktopClasses = !empty($desktopClasses) ? ' ' . implode(' ', $desktopClasses) : NULL;
+        // var_dump($desktopClasses);
+        // $desktopClasses = !empty($desktopClasses) ? ' ' . implode(' ', $desktopClasses) : NULL;
         $mobileClasses = !empty($args['classes']['mobile']) ? $args['classes']['mobile'] : NULL;
         $icon = !empty($args['icon']) ? $args['icon'] : NULL;
         $desktop_text = !empty($args['text']) ? $args['text'] : NULL;

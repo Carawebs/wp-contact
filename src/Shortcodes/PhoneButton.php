@@ -2,6 +2,7 @@
 namespace Carawebs\Contact\Shortcodes;
 
 use Carawebs\Contact\Traits\CssClasses;
+use Carawebs\Contact\Views\MakePhoneLink;
 
 /**
 * Common code for Phone Buttons (Mobile & Landline)
@@ -26,7 +27,7 @@ class PhoneButton extends ContactAction {
         $args['classes'] = $this->buttonClasses($args['classes']);
 
         ob_start();
-        echo \Carawebs\Contact\Views\MakePhoneLink::button($args);
+        echo MakePhoneLink::button($args);
         return ob_get_clean();
     }
 

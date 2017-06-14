@@ -15,13 +15,12 @@ class LandlineButton extends PhoneButton
     public function setupData()
     {
         $this->setDefaultContactStrings([
-            'text' => 'Call Office: ',
+            'text' => '',
             'mobileViewText' => 'Click to Call Landline'
         ]);
 
         $this->setnumber($this->defaultContactDetails['landline']);
-
-        $icon = '<i class="mobile-icon"></i>&nbsp;';
+        $icon = '<i class="landline-icon"></i>&nbsp;';
         $this->setIcon($icon);
     }
 }
