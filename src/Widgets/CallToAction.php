@@ -5,7 +5,8 @@ use Carawebs\Contact\Output\ContactMethods;
 use Carawebs\Contact\Data\Address as Data;
 use Carawebs\Contact\Traits\PartialSelector;
 
-class CallToAction extends \WP_Widget {
+class CallToAction extends \WP_Widget
+{
     use PartialSelector;
 
     /**

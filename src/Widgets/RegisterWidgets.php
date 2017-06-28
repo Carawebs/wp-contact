@@ -8,7 +8,8 @@ use DI;
 *
 * Create an instance of this class within theme - hook to 'after_setup_theme'.
 */
-class RegisterWidgets {
+class RegisterWidgets
+{
 
     /**
      * The DI Container
@@ -22,25 +23,29 @@ class RegisterWidgets {
      */
     protected $widgets;
 
-    function __construct( array $widgets = [] ) {
+    function __construct( array $widgets = [] )
+    {
         $this->container = DI\ContainerBuilder::buildDevContainer();
         $this->set_widgets($widgets);
         $this->widgets_init();
     }
 
-    public function set_widgets( array $widgets = [] ) {
+    public function set_widgets( array $widgets = [] )
+    {
         if (empty($widgets)) {
             $this->widgets = [
                 'Address',
                 'Contact',
                 'CallToAction',
+                'Social',
             ];
         } else {
             $this->widgets = $widgets;
         }
     }
 
-    public function register_widgets() {
+    public function register_widgets()
+    {
         foreach( $this->widgets as $widget ) {
             global $wp_widget_factory;
             $widgetClass = 'Carawebs\\Contact\\Widgets\\' . $widget;
